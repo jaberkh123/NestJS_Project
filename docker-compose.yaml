@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+
+  api:
+    build: ./apps/api
+    environment:
+      MONGO_URI: mongodb://mongo:27017/pantohealth
+      RABBITMQ_URL: amqp://rabbitmq:5672
+      RABBITMQ_QUEUE: xray-queue
+      PORT: 3000
+    depends_on: [mongo, rabbitmq]
+    ports: ["3000:3000"]
+
+  producer:
+    build: ./apps/producer
+#    restart: always
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:5672
+      RABBITMQ_QUEUE: xray-queue
+      SAMPLE_PATH: ./data/sample.json
+    depends_on: [rabbitmq]
+
+volumes:
+  mongo_data:
+
+
+
