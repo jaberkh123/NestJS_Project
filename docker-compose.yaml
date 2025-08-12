@@ -16,6 +16,8 @@ services:
 
   api:
     build: ./apps/api
+    restart: always
+
     environment:
       MONGO_URI: mongodb://mongo:27017/pantohealth
       RABBITMQ_URL: amqp://rabbitmq:5672
@@ -26,13 +28,19 @@ services:
 
   producer:
     build: ./apps/producer
-#    restart: always
+    restart: always
     environment:
-      RABBITMQ_URL: amqp://rabbitmq:5672
       RABBITMQ_QUEUE: xray-queue
       SAMPLE_PATH: ./data/sample.json
     depends_on: [rabbitmq]
 
+  mongo-express:
+    image: mongo-express
+    ports: ["8081:8081"]
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: 58595859963
 volumes:
   mongo_data:
 
