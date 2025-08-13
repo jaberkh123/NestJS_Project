@@ -41,3 +41,54 @@ sudo usermod -aG docker $USER && newgrp docker
 # verify
 docker --version
 docker compose version    # should print v2.x
+```
+
+## Quick Start (Docker)
+```bash
+git clone <repo-url> && cd <repo-folder>
+docker compose up --build -d
+```
+## Services
+------API Docs: http://localhost:3000/docs
+
+------RabbitMQ UI: http://localhost:15672 (default: admin / 58595859963)
+
+------Mongo-Express: http://localhost:8081 (default: admin / 58595859963)
+
+## Configuration (defaults baked-in)
+```bash
+API
+
+   MONGO_URI = mongodb://mongo:27017/pantohealth
+
+   RABBITMQ_URL = amqp://rabbitmq:5672
+
+   RABBITMQ_QUEUE = xray-queue
+
+   PORT = 3000
+
+Producer
+
+   RABBITMQ_URL = amqp://rabbitmq:5672
+
+   RABBITMQ_QUEUE = xray-queue
+
+   SAMPLE_PATH = ./data/sample.json
+
+   PRODUCER_MODE = loop
+
+   INTERVAL_MS = 10000
+
+```
+
+## Tests
+```bash
+cd apps/api
+npm ci
+npm run test
+npm run test:cov
+```
+
+## Producer
+Sends the sample payload to xray-queue (default every 10s).
+
