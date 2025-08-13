@@ -45,7 +45,7 @@ docker compose version    # should print v2.x
 
 ## Quick Start (Docker)
 ```bash
-git clone <repo-url> && cd <repo-folder>
+git clone [<repo-url>](https://github.com/jaberkh123/NestJS_Project.git) && cd NestJS_Project
 docker compose up --build -d
 ```
 ## Services
