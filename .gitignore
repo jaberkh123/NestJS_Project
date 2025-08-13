@@ -4,3 +4,5 @@ node_modules/
 dist/
 .idea/
 .DS_Store
+!apps/api/.env
+!apps/producer/.env
