@@ -55,6 +55,32 @@ docker compose up --build -d
 
 ------Mongo-Express: http://localhost:8081 (default: admin / 58595859963)
 
+
+
+## API (examples)
+Swagger at /docs.
+
+```bash
+# list (sorted by time desc)
+curl "http://localhost:3000/signals?limit=5"
+
+# filter by deviceId
+curl "http://localhost:3000/signals?deviceId=66bb584d4ae73e488c30a072&limit=5"
+
+# create manually
+curl -X POST http://localhost:3000/signals \
+  -H "Content-Type: application/json" \
+  -d '{"deviceId":"66bb","time":1735683480000,"dataLength":3,"dataVolume":123}'
+
+# get by id
+curl "http://localhost:3000/signals/<ObjectId>"
+
+# delete by id
+curl -X DELETE "http://localhost:3000/signals/<ObjectId>"
+```
+
+
+
 ## Configuration (defaults baked-in)
 ```bash
 API
@@ -89,6 +115,20 @@ npm run test
 npm run test:cov
 ```
 
-## Producer
+## Producer config
 Sends the sample payload to xray-queue (default every 10s).
+
+## Logs & teardown:
+
+```bash
+docker compose logs -f api
+docker compose logs -f producer
+docker compose down           # stop
+# docker compose down -v      # stop + delete data volumes (careful)
+```
+
+
+## License
+This project is licensed under the MIT License 
+
 
