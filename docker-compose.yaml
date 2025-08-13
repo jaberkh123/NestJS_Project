@@ -10,8 +10,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 58595859963
 
 
   api:
@@ -28,8 +28,9 @@ services:
 
   producer:
     build: ./apps/producer
-    restart: always
+    #restart: always
     environment:
+      RABBITMQ_URL: amqp://rabbitmq:5672
       RABBITMQ_QUEUE: xray-queue
       SAMPLE_PATH: ./data/sample.json
     depends_on: [rabbitmq]

@@ -11,7 +11,6 @@ export class RabbitService {
 
   constructor(private cfg: ConfigService, private signals: SignalsService) {}
 
-  // ✅ اینجـا اضافه کن
   async handleMessage(content: string) {
     const payload = JSON.parse(content);
     const deviceId = Object.keys(payload)[0];
@@ -45,7 +44,7 @@ export class RabbitService {
         if (!msg) return;
         try {
           const content = msg.content.toString();
-          await this.handleMessage(content);   // ✅ استفاده از متد
+          await this.handleMessage(content);   
           this.ch.ack(msg);
         } catch (err) {
           this.logger.error(`Consume failed: ${err}`);
