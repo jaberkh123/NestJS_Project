@@ -33,6 +33,7 @@ services:
       RABBITMQ_URL: amqp://admin:58595859963@rabbitmq:5672
       RABBITMQ_QUEUE: xray-queue
       SAMPLE_PATH: ./data/sample.json
+      INTERVAL_MS: '30000'
     depends_on: [rabbitmq]
 
   mongo-express:
